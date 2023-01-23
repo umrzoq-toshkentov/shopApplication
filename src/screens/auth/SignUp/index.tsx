@@ -7,16 +7,21 @@ import { Checkbox } from "../../../components/Checkbox";
 import { Button } from "../../../components/Button";
 import { Separator } from "../../../components/Separator";
 import { GoogleLogin } from "../../../components/GoogleLogin";
+import { useNavigation } from "@react-navigation/native";
+import { SCREENS } from "../../../constants/screens";
 
 export const SignUp = () => {
+    const { navigate, goBack } = useNavigation()
     const [checked, setChecked] = useState(false);
 
 
     const handleCheck = () => setChecked(!checked);
 
-    const handleBack = () => { }
+    const handleBack = () => goBack()
 
-    const onSignIn = () => { }
+    const onSignIn = () => {
+        navigate(SCREENS.SIGN_IN as never)
+    }
 
     return (
         <View style={styles.container}>

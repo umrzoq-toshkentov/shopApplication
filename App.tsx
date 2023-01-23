@@ -6,12 +6,17 @@
  */
 
 import React, { useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
 import { Splash } from './src/screens/auth/Splash';
 import { SignUp } from './src/screens/auth/SignUp';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from "react-native-config";
 import { SignIn } from './src/screens/auth/SignIn';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SCREENS } from './src/constants/screens';
+
+
+const Stack = createNativeStackNavigator()
 
 function App(): JSX.Element {
 
@@ -25,11 +30,13 @@ function App(): JSX.Element {
   }, [])
 
   return (
-    <SafeAreaView>
-      {/* <Splash /> */}
-      {/* <SignUp /> */}
-      <SignIn />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
+        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
+        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

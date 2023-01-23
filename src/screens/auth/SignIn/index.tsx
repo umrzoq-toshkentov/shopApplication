@@ -6,11 +6,18 @@ import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
 import { Separator } from "../../../components/Separator";
 import { GoogleLogin } from "../../../components/GoogleLogin";
+import { useNavigation } from "@react-navigation/native";
+import { SCREENS } from "../../../constants/screens";
 
 export const SignIn = () => {
-    const handleBack = () => { }
+    const { navigate, goBack } = useNavigation()
+    const handleBack = () => goBack()
 
-    const onSignUp = () => { }
+    const onSignUp = () => {
+        navigate(SCREENS.SIGN_UP as never)
+    }
+
+
 
     return (
         <View style={styles.container}>
