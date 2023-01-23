@@ -2,6 +2,8 @@ import React, { memo, useState } from "react"
 import { Image, TouchableOpacity, View } from "react-native"
 import { styles } from "./style"
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { useNavigation } from "@react-navigation/native";
+import { SCREENS } from "../../constants/screens";
 
 
 interface GoogleLoginProps {
@@ -9,7 +11,7 @@ interface GoogleLoginProps {
 }
 
 export const GoogleLogin = memo(({ onPress }: GoogleLoginProps) => {
-
+    const { navigate } = useNavigation()
     const [userInfo, setUserInfo] = useState({})
 
     const handleGoogleLogin = async () => {
@@ -18,6 +20,7 @@ export const GoogleLogin = memo(({ onPress }: GoogleLoginProps) => {
             const userInfo = await GoogleSignin.signIn();
             console.log(userInfo, "user Info")
             setUserInfo({ userInfo });
+            navigate(SCREENS.HOME as never)
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow

@@ -1,5 +1,9 @@
-export enum SCREENS {
-  SIGN_UP = 'SIGN UP',
-  SIGN_IN = 'SIGN IN',
-  SPLASH = 'SPLASH',
-}
+export const SCREENS = {
+  SIGN_UP: 'SIGN UP',
+  SIGN_IN: 'SIGN IN',
+  SPLASH: 'SPLASH',
+  HOME: 'HOME',
+  PROFILE: 'PROFILE',
+  FAVORITES: 'FAVORITES',
+  TABS: 'TABS',
+};
