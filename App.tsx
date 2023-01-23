@@ -11,10 +11,20 @@ import { SignUp } from './src/screens/auth/SignUp';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from "react-native-config";
 import { SignIn } from './src/screens/auth/SignIn';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SCREENS } from './src/constants/screens';
+import { colors } from './src/utils/colors';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'rgb(255, 45, 85)',
+    background: colors.white
+  },
+};
 
 const Stack = createNativeStackNavigator()
 
@@ -30,13 +40,15 @@ function App(): JSX.Element {
   }, [])
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
-        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
-        <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer theme={MyTheme}>
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
+          <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
+          <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

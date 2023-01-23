@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
   },
   header: {
     padding: 24,
-    paddingTop: 50,
   },
   scrollViewContainer: {
     padding: 24,
