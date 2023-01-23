@@ -20,7 +20,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from './src/screens/app/Home';
 import { Profile } from './src/screens/app/Profile';
 import { Favorites } from './src/screens/app/Favorites';
-import { Image, ImageProps, ImageSourcePropType } from 'react-native';
+import { Image } from 'react-native';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -50,6 +50,9 @@ const TAB = () => {
       },
       headerShown: false,
       tabBarShowLabel: false,
+      tabBarStyle: {
+        borderTopColor: colors.lightGrey
+      }
     })}>
       <BottomTab.Screen name={SCREENS.HOME} component={Home} />
       <BottomTab.Screen name={SCREENS.PROFILE} component={Profile} />
