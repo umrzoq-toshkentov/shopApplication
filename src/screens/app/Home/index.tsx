@@ -8,8 +8,11 @@ import { CategoryBox } from "../../../components/CategoryBox";
 import { products, ProductItemType } from "../../../data/products";
 import { ProductItem } from "../../../components/ProductItem";
 import { useDebounce } from "../../../hooks/useDebounce";
+import { useNavigation } from "@react-navigation/native";
+import { SCREENS } from "../../../constants/screens";
 
 export const Home = () => {
+    const { navigate } = useNavigation()
     const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
     const [filteredProducts, setFilteredProducts] = useState(products)
     const [keyword, setKeyword] = useState<string>('')
@@ -41,10 +44,10 @@ export const Home = () => {
     }
 
     const renderProductItem = ({ item }: { item: ProductItemType }) => {
-
         const onPress = () => {
-            console.log("pressed")
+            navigate(SCREENS.PRODUCT_DETAILS as never, { item } as never)
         }
+
         return (
             <ProductItem {...item} onPress={onPress} />
         )
