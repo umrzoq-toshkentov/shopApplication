@@ -54,4 +54,19 @@ export const styles = StyleSheet.create({
   contact_container: {
     flex: 1,
   },
+  back_container: {
+    width: 40,
+    height: 40,
+    left: 32,
+    top: 21,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderRadius: 6,
+    position: 'absolute',
+  },
+  back: {
+    width: 6.5,
+    height: 13,
+  },
 });

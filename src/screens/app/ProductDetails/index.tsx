@@ -2,7 +2,7 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "./style"
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { ProductItemType } from "../../../data/products";
 import { Button } from "../../../components/Button";
 
@@ -11,6 +11,7 @@ interface RouteParams {
 }
 
 export const ProductDetails = () => {
+    const { goBack } = useNavigation()
     const route = useRoute()
     const params = route.params as RouteParams;
     const { title, image, price, description } = params?.item || {}
@@ -25,6 +26,10 @@ export const ProductDetails = () => {
                     <Text style={styles.price}>{price}</Text>
                     <Text style={styles.description}>{description}</Text>
                 </View>
+
+                <Pressable hitSlop={10} onPress={() => goBack()} style={styles.back_container}>
+                    <Image style={styles.back} source={require("../../../assets/back.png")} />
+                </Pressable>
             </ScrollView>
             <View style={styles.footer}>
                 <Pressable style={styles.bookmark_container}>
