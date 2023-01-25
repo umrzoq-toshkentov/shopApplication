@@ -1,19 +1,22 @@
-import { Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { SCREENS } from "../../../constants/screens";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { products, ProductItemType } from "../../../data/products";
+import { FavoritetItem } from "../../../components/FavoriteItem";
+import { styles } from "./style";
+import { Header } from "../../../components/Header";
 
 export const Favorites = () => {
-    const { navigate } = useNavigation()
-    const handlePress = () => navigate(SCREENS.SIGN_UP as never)
-    const handleSigIn = () => navigate(SCREENS.SIGN_IN as never)
+
+    const renderItem = ({ item }: { item: ProductItemType }) => {
+
+        return (<FavoritetItem {...item} />)
+    }
 
     return (
         <SafeAreaView>
-            <View>
-                <Text>Hello from Favorites</Text>
-            </View>
+            <Header title="Favorites" />
+            <FlatList keyExtractor={(item) => String(item.id)} renderItem={renderItem} data={products} />
         </SafeAreaView>
     )
 }
