@@ -6,14 +6,15 @@ import { Input } from "../Input";
 interface HeaderProps {
     title: string;
     onBackPress?: () => void;
-    onSearch?: () => void;
+    value?: string;
+    onSearch?: any;
     onLogout?: () => void;
     showSearch?: boolean;
     showLogout?: boolean;
     showBack?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = memo(({ title, onBackPress, onLogout, onSearch, showBack, showLogout, showSearch }) => {
+export const Header: React.FC<HeaderProps> = memo(({ title, value, onBackPress, onLogout, onSearch, showBack, showLogout, showSearch }) => {
 
     const [showSearchInput, setShowSearchInput] = useState(false)
 
@@ -22,7 +23,7 @@ export const Header: React.FC<HeaderProps> = memo(({ title, onBackPress, onLogou
     }
 
     return (
-        <View>
+        <View style={styles.mainContainer}>
             <View style={styles.container}>
                 {
                     showBack && showSearchInput ?
@@ -41,7 +42,7 @@ export const Header: React.FC<HeaderProps> = memo(({ title, onBackPress, onLogou
                 }
             </View>
             {
-                showSearchInput ? <Input label="" placeholder="Type your keyword ..." /> : null
+                showSearchInput ? <Input value={value} onChange={onSearch} label="" placeholder="Type your keyword ..." /> : null
             }
         </View>
     )

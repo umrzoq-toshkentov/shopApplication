@@ -9,28 +9,36 @@ import { categories, ItemType } from "../../../data/categories";
 import { CategoryBox } from "../../../components/CategoryBox";
 import { products, ProductItemType } from "../../../data/products";
 import { ProductItem } from "../../../components/ProductItem";
+import { useDebounce } from "../../../hooks/useDebounce";
 
 export const Home = () => {
     const { navigate } = useNavigation()
     const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
     const [filteredProducts, setFilteredProducts] = useState(products)
+    const [keyword, setKeyword] = useState<string>('')
+    const { value } = useDebounce(keyword, 500)
     const handlePress = () => navigate(SCREENS.SIGN_UP as never)
     const handleSigIn = () => navigate(SCREENS.SIGN_IN as never)
 
     useEffect(() => {
-        if (selectedCategory) {
+        if (selectedCategory && !value) {
             const updatedProducts = products.filter((product) => product.category === selectedCategory);
             setFilteredProducts(updatedProducts)
-        } else {
+        } else if (selectedCategory && value) {
+            const updatedProducts = products.filter((product) => product.category === selectedCategory && product.title.toLowerCase().includes(value.toLowerCase()));
+            setFilteredProducts(updatedProducts)
+        } else if (!selectedCategory && value) {
+            const updatedProducts = products.filter((product) => product.title.toLowerCase().includes(value.toLocaleLowerCase()));
+            setFilteredProducts(updatedProducts)
+        } else if (!selectedCategory && !value) {
             setFilteredProducts(products)
         }
-    }, [selectedCategory])
+    }, [selectedCategory, value])
 
     const renderCategoryItem = ({ item, index }: { item: ItemType, index: number }) => {
 
         const onPress = () => {
             setSelectedCategory(item.id);
-
         }
         return (
             <CategoryBox isSelected={item.id === selectedCategory} isFirst={index === 0} {...item} onPress={onPress} />
@@ -49,7 +57,7 @@ export const Home = () => {
 
     return (
         <SafeAreaView>
-            <Header showSearch title="Find All you need" />
+            <Header showSearch value={keyword} onSearch={setKeyword} title="Find All you need" />
             <FlatList showsHorizontalScrollIndicator={false} horizontal style={styles.list} nestedScrollEnabled data={categories} renderItem={renderCategoryItem} keyExtractor={(_item, index) => String(index)} />
             <FlatList
                 style={styles.productList}

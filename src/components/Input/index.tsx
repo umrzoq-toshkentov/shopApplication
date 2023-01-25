@@ -7,9 +7,11 @@ interface InputProps {
     placeholder: string;
     type?: "password" | "text"
     secureTextEntry?: boolean;
+    value?: string;
+    onChange?: any;
 }
 
-export const Input = memo(({ label, placeholder, secureTextEntry }: InputProps) => {
+export const Input = memo(({ label, placeholder, secureTextEntry, onChange, value }: InputProps) => {
     const [visible, setVisible] = useState(true)
 
     const onEyePress = () => {
@@ -20,7 +22,7 @@ export const Input = memo(({ label, placeholder, secureTextEntry }: InputProps) 
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
             <View style={styles.inputContainer}>
-                <TextInput secureTextEntry={secureTextEntry && !visible} placeholder={placeholder} style={styles.input} />
+                <TextInput value={value} onChangeText={onChange} secureTextEntry={secureTextEntry && !visible} placeholder={placeholder} style={styles.input} />
                 {
                     secureTextEntry ?
                         <Pressable onPress={onEyePress}>
