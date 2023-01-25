@@ -6,8 +6,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 24,
   },
-
   title: {
     color: colors.black,
     fontSize: 16,

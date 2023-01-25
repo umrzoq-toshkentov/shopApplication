@@ -16,7 +16,8 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: 32,
-    height: 32
+    height: 32,
+    borderRadius: 4
   },
   title: {
     color: colors.grey,

@@ -1,41 +1,64 @@
 import { FlatList, ScrollView, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SCREENS } from "../../../constants/screens";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from "../../../components/Header";
 import { styles } from "./style";
-import { categories } from "../../../data/categories";
+import { categories, ItemType } from "../../../data/categories";
 import { CategoryBox } from "../../../components/CategoryBox";
-
-
-interface ItemType {
-    title: string;
-    image: string;
-    id?: number;
-}
+import { products, ProductItemType } from "../../../data/products";
+import { ProductItem } from "../../../components/ProductItem";
 
 export const Home = () => {
     const { navigate } = useNavigation()
+    const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
+    const [filteredProducts, setFilteredProducts] = useState(products)
     const handlePress = () => navigate(SCREENS.SIGN_UP as never)
     const handleSigIn = () => navigate(SCREENS.SIGN_IN as never)
 
-    const renderCategoryItem = ({ item }: { item: ItemType }) => {
+    useEffect(() => {
+        if (selectedCategory) {
+            const updatedProducts = products.filter((product) => product.category === selectedCategory);
+            setFilteredProducts(updatedProducts)
+        } else {
+            setFilteredProducts(products)
+        }
+    }, [selectedCategory])
+
+    const renderCategoryItem = ({ item, index }: { item: ItemType, index: number }) => {
+
+        const onPress = () => {
+            setSelectedCategory(item.id);
+
+        }
+        return (
+            <CategoryBox isSelected={item.id === selectedCategory} isFirst={index === 0} {...item} onPress={onPress} />
+        )
+    }
+
+    const renderProductItem = ({ item }: { item: ProductItemType }) => {
 
         const onPress = () => {
             console.log("pressed")
         }
         return (
-            <CategoryBox {...item} onPress={onPress} />
+            <ProductItem {...item} onPress={onPress} />
         )
     }
 
     return (
         <SafeAreaView>
-            <View style={styles.container}>
-                <Header showSearch title="Find All you need" />
-                <FlatList showsHorizontalScrollIndicator={false} horizontal style={styles.list} nestedScrollEnabled data={categories} renderItem={renderCategoryItem} keyExtractor={(_item, index) => String(index)} />
-            </View>
+            <Header showSearch title="Find All you need" />
+            <FlatList showsHorizontalScrollIndicator={false} horizontal style={styles.list} nestedScrollEnabled data={categories} renderItem={renderCategoryItem} keyExtractor={(_item, index) => String(index)} />
+            <FlatList
+                style={styles.productList}
+                numColumns={2}
+                data={filteredProducts}
+                renderItem={renderProductItem}
+                keyExtractor={(item) => String(item.id)}
+                ListFooterComponent={<View style={{ height: 150 }} />}
+            />
         </SafeAreaView>
     )
 }

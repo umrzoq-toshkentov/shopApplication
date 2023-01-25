@@ -1,6 +1,5 @@
 export const categories = [
   {
-    id: 0,
     title: 'Popular',
     image:
       'https://static8.depositphotos.com/1338574/831/i/600/depositphotos_8318731-stock-photo-gold-star.jpg',
@@ -36,3 +35,9 @@ export const categories = [
       'https://szyszkadesign.com/wp-content/uploads/2021/12/categorybeds-1-1200x1200-1.jpg',
   },
 ];
+
+export interface ItemType {
+  title: string;
+  image: string;
+  id?: number;
+}

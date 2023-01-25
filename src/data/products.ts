@@ -45,3 +45,9 @@ export const products = [
     price: '$ 120.00',
   },
 ];
+
+export interface ProductItemType {
+  title: string;
+  image: string;
+  id?: number;
+}
