@@ -1,4 +1,4 @@
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Linking, Pressable, ScrollView, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from "./style"
@@ -17,6 +17,11 @@ export const ProductDetails = () => {
     const params = route.params as RouteParams;
     const { title, image, price, description, images } = params?.item || {}
 
+
+    const handlePress = () => {
+        // Linking.openURL('tel:+12345678')
+        Linking.openURL('mailto:utoshkentov@gmail.com')
+    }
     return (
         <SafeAreaView style={styles.safe}>
 
@@ -37,7 +42,7 @@ export const ProductDetails = () => {
                     <Image style={styles.bookmark} source={require("../../../assets/tabs/bookmark_active.png")} />
                 </Pressable>
                 <View style={styles.contact_container}>
-                    <Button text="Contact seller" />
+                    <Button handlePress={handlePress} text="Contact seller" />
                 </View>
             </View>
         </SafeAreaView>
