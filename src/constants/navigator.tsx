@@ -31,8 +31,8 @@ export const TAB = () => {
       }
     })}>
       <BottomTab.Screen name={SCREENS.HOME} component={Home} />
-      <BottomTab.Screen name={SCREENS.PROFILE} component={Profile} />
       <BottomTab.Screen name={SCREENS.FAVORITES} component={Favorites} />
+      <BottomTab.Screen name={SCREENS.PROFILE} component={Profile} />
     </BottomTab.Navigator>
   )
 }
