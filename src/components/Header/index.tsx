@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = memo(({ title, value, onBackPress, 
         <View style={styles.mainContainer}>
             <View style={styles.container}>
                 {
-                    showBack && showSearchInput ?
+                    showBack ?
                         <Pressable hitSlop={20} onPress={onBackPress}>
                             <Image style={styles.icon} source={require("../../assets/back.png")} />
                         </Pressable>

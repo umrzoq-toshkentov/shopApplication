@@ -18,6 +18,10 @@ export const Profile = () => {
         navigate(SCREENS.SETTINGS as never)
     }
 
+    const handleCreateListing = () => {
+        navigate(SCREENS.CREATE_LISTINGS as never)
+    }
+
     return (
         <SafeAreaView style={styles.mainContainer}>
             <Header
@@ -31,7 +35,7 @@ export const Profile = () => {
 
 
                 <View style={styles.listContainer}>
-                    <ListItem title="My Listings" subtitle="Already have 10 listing" />
+                    <ListItem onPress={handleCreateListing} title="My Listings" subtitle="Already have 10 listing" />
                     <ListItem onPress={handlePress} title="Settings" subtitle="Account, FAQ, Contact" />
                 </View>
 
