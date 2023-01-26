@@ -4,9 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
   },
-  list: {
-    paddingVertical: 24,
-  },
+  list: {},
   productList: {
     paddingHorizontal: 16,
   },

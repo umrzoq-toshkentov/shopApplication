@@ -13,7 +13,7 @@ interface CategoryBoxProps {
 
 export const CategoryBox = memo(({ title, image, onPress, isFirst, isSelected }: CategoryBoxProps) => {
     return (
-        <Pressable onPress={onPress} style={[styles.container, isFirst ? { marginLeft: 24 } : null]} hitSlop={10}>
+        <Pressable onPress={onPress} style={[styles.container, isFirst ? { marginLeft: 24 } : {}]} hitSlop={10}>
             <View style={[styles.imageContainer, isSelected ? { backgroundColor: colors.black } : {}]}>
                 <Image style={styles.image} source={{ uri: image }} />
             </View>
