@@ -5,16 +5,18 @@ import { styles } from "./styles";
 
 interface ListItemProps {
     title: string;
-    subtitle: string;
+    subtitle?: string;
+    onPress?: () => void;
 }
 
-export const ListItem = memo(({ title, subtitle }: ListItemProps) => {
+export const ListItem = memo(({ title, subtitle, onPress }: ListItemProps) => {
 
     return (
-        <Pressable style={styles.container}>
+        <Pressable onPress={onPress} style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.title}>{title}</Text>
-                <Text style={styles.subtitle}>{subtitle}</Text>
+                {!!subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
+
             </View>
             <View style={styles.arrowContainer}>
                 <Image

@@ -9,9 +9,13 @@ import { ListItem } from "../../../components/ListItem";
 import { Button } from "../../../components/Button";
 
 export const Profile = () => {
-
+    const { navigate } = useNavigation()
     const onLogout = () => {
 
+    }
+
+    const handlePress = () => {
+        navigate(SCREENS.SETTINGS as never)
     }
 
     return (
@@ -28,7 +32,7 @@ export const Profile = () => {
 
                 <View style={styles.listContainer}>
                     <ListItem title="My Listings" subtitle="Already have 10 listing" />
-                    <ListItem title="Settings" subtitle="Account, FAQ, Contact" />
+                    <ListItem onPress={handlePress} title="Settings" subtitle="Account, FAQ, Contact" />
                 </View>
 
                 <Button style={styles.button} text="Add New Listing" />
