@@ -35,11 +35,11 @@ export const Profile = () => {
 
 
                 <View style={styles.listContainer}>
-                    <ListItem onPress={handleCreateListing} title="My Listings" subtitle="Already have 10 listing" />
+                    <ListItem title="My Listings" subtitle="Already have 10 listing" />
                     <ListItem onPress={handlePress} title="Settings" subtitle="Account, FAQ, Contact" />
                 </View>
 
-                <Button style={styles.button} text="Add New Listing" />
+                <Button handlePress={handleCreateListing} style={styles.button} text="Add New Listing" />
 
             </ScrollView>
 
