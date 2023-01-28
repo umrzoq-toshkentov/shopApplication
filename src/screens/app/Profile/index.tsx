@@ -9,6 +9,9 @@ import { ListItem } from "../../../components/ListItem";
 import { Button } from "../../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../../../store/userContext";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "../../../api";
+import { ProfileDto } from "../../../dto";
 
 export const Profile = () => {
     const { navigate } = useNavigation()
@@ -17,6 +20,8 @@ export const Profile = () => {
         AsyncStorage.removeItem('@token');
         setLoggedIn(false)
     }
+
+    const { data: profile } = useQuery<ProfileDto>(["profile"], () => getProfile());
 
     const handlePress = (route: string) => {
         navigate(route as never)
@@ -30,8 +35,8 @@ export const Profile = () => {
                 onLogout={onLogout}
             />
             <ScrollView style={styles.container}>
-                <Text style={styles.name}>Name</Text>
-                <Text style={styles.email}>Email</Text>
+                <Text style={styles.name}>Name: {profile?.fullName}</Text>
+                <Text style={styles.email}>Email: {profile?.email}</Text>
 
 
                 <View style={styles.listContainer}>

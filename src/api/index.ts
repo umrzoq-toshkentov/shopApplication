@@ -1,6 +1,6 @@
 import Config from 'react-native-config';
 import axios from 'axios';
-import {RegisterProps, LoginDto} from '../dto';
+import {RegisterProps, LoginDto, UpdateProfileDto} from '../dto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const api = axios.create({
@@ -10,9 +10,8 @@ export const api = axios.create({
 api.interceptors.request.use(
   async config => {
     const token = await AsyncStorage.getItem('@token');
-    console.log(token, 'token');
     if (token) {
-      config.headers.Authorization = 'Bearer ' + token;
+      config.headers.Authorization = token;
     }
     return config;
   },
@@ -27,5 +26,15 @@ export const register = async (body: RegisterProps) => {
 
 export const login = async (body: LoginDto) => {
   const res = await api.post('api/user/login', {...body});
+  return res;
+};
+
+export const getProfile = async () => {
+  const res = await api.get('api/user/profile');
+  return res.data;
+};
+
+export const updateProfile = async (body: UpdateProfileDto) => {
+  const res = await api.patch('api/user/profile', body);
   return res;
 };
