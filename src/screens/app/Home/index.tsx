@@ -1,35 +1,47 @@
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from "../../../components/Header";
 import { styles } from "./style";
 import { categories, ItemType } from "../../../data/categories";
 import { CategoryBox } from "../../../components/CategoryBox";
-import { products, ProductItemType } from "../../../data/products";
+import { products } from "../../../data/products";
 import { ProductItem } from "../../../components/ProductItem";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useNavigation } from "@react-navigation/native";
 import { SCREENS } from "../../../constants/screens";
+import { useQuery } from "@tanstack/react-query";
+import { getServices } from "../../../api";
+import { Service } from "../../../dto";
 
 export const Home = () => {
     const { navigate } = useNavigation()
     const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
-    const [filteredProducts, setFilteredProducts] = useState(products)
+    const [filteredProducts, setFilteredProducts] = useState<Service[]>()
     const [keyword, setKeyword] = useState<string>('')
     const { value } = useDebounce(keyword, 500)
 
+    const { isLoading, data } = useQuery<Service[]>(["services"], () => getServices(), {
+        onSuccess: (data) => {
+            const filteredData = data.filter(item => !!item.image)
+            setFilteredProducts(filteredData)
+        }
+    });
+    const filteredData = data?.filter(item => !!item.image) || []
+
     useEffect(() => {
+
         if (selectedCategory && !value) {
-            const updatedProducts = products.filter((product) => product.category === selectedCategory);
+            const updatedProducts = filteredData.filter((product) => Number(product?.category) === selectedCategory);
             setFilteredProducts(updatedProducts)
         } else if (selectedCategory && value) {
-            const updatedProducts = products.filter((product) => product.category === selectedCategory && product.title.toLowerCase().includes(value.toLowerCase()));
+            const updatedProducts = filteredData.filter((product) => Number(product?.category) === selectedCategory && product.title.toLowerCase().includes(value.toLowerCase()));
             setFilteredProducts(updatedProducts)
         } else if (!selectedCategory && value) {
-            const updatedProducts = products.filter((product) => product.title.toLowerCase().includes(value.toLocaleLowerCase()));
+            const updatedProducts = filteredData.filter((product) => product.title.toLowerCase().includes(value.toLocaleLowerCase()));
             setFilteredProducts(updatedProducts)
         } else if (!selectedCategory && !value) {
-            setFilteredProducts(products)
+            setFilteredProducts(filteredData)
         }
     }, [selectedCategory, value])
 
@@ -43,7 +55,7 @@ export const Home = () => {
         )
     }
 
-    const renderProductItem = ({ item }: { item: ProductItemType }) => {
+    const renderProductItem = ({ item }: { item: Service }) => {
         const onPress = () => {
             navigate(SCREENS.PRODUCT_DETAILS as never, { item } as never)
         }
@@ -51,6 +63,12 @@ export const Home = () => {
         return (
             <ProductItem {...item} onPress={onPress} />
         )
+    }
+
+    if (isLoading) {
+        return <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <ActivityIndicator />
+        </View>
     }
 
     return (
@@ -62,7 +80,7 @@ export const Home = () => {
                 numColumns={2}
                 data={filteredProducts}
                 renderItem={renderProductItem}
-                keyExtractor={(item) => String(item.id)}
+                keyExtractor={(item) => String(item._id)}
                 ListFooterComponent={<View style={{ height: 150 }} />}
             />
         </SafeAreaView>

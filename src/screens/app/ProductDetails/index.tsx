@@ -6,9 +6,11 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ProductItemType } from "../../../data/products";
 import { Button } from "../../../components/Button";
 import { ImageCarousel } from "../../../components/ImageCarousel";
+import { Service } from "../../../dto";
+import Config from 'react-native-config';
 
 interface RouteParams {
-    item: ProductItemType
+    item: Service
 }
 
 export const ProductDetails = () => {
@@ -26,7 +28,7 @@ export const ProductDetails = () => {
         <SafeAreaView style={styles.safe}>
 
             <ScrollView style={styles.container}>
-                {images ? <ImageCarousel images={images} /> : <Image style={styles.image} source={{ uri: image }} />}
+                {images ? <ImageCarousel images={images} /> : <Image style={styles.image} source={{ uri: `${Config.API_BASE_URL}/api/${image.path}` }} />}
                 <View style={styles.content}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.price}>{price}</Text>

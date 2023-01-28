@@ -38,3 +38,8 @@ export const updateProfile = async (body: UpdateProfileDto) => {
   const res = await api.patch('api/user/profile', body);
   return res;
 };
+
+export const getServices = async () => {
+  const res = await api.get('api/services/');
+  return res.data;
+};
