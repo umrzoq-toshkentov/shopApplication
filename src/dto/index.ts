@@ -40,3 +40,5 @@ export interface Service {
   updatedAt?: Date;
   images: string[];
 }
+
+export interface UpdateServiceDto extends Pick<Service, 'liked'> {}

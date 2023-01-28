@@ -1,6 +1,11 @@
 import Config from 'react-native-config';
 import axios from 'axios';
-import {RegisterProps, LoginDto, UpdateProfileDto} from '../dto';
+import {
+  RegisterProps,
+  LoginDto,
+  UpdateProfileDto,
+  UpdateServiceDto,
+} from '../dto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const api = axios.create({
@@ -42,4 +47,16 @@ export const updateProfile = async (body: UpdateProfileDto) => {
 export const getServices = async () => {
   const res = await api.get('api/services/');
   return res.data;
+};
+
+export const updateService = async (
+  id: string | number,
+  body: UpdateServiceDto,
+) => {
+  const res = await api.patch(`api/services/`, {
+    ...body,
+    serviceId: id,
+  });
+
+  return res;
 };

@@ -5,7 +5,6 @@ import { Header } from "../../../components/Header";
 import { styles } from "./style";
 import { categories, ItemType } from "../../../data/categories";
 import { CategoryBox } from "../../../components/CategoryBox";
-import { products } from "../../../data/products";
 import { ProductItem } from "../../../components/ProductItem";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { useNavigation } from "@react-navigation/native";

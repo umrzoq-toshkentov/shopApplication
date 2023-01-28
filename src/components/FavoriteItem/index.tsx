@@ -1,20 +1,22 @@
 import React, { memo } from 'react';
-import { Image, ImageSourcePropType, Pressable, Text, View } from "react-native"
+import { Image, ImageSourcePropType, Pressable, Text, TouchableOpacity, View } from "react-native"
 import { styles } from './styles';
+import Config from 'react-native-config';
+import { Service } from '../../dto';
 
-interface FavoriteItemProps {
+interface FavoriteItemProps extends Service {
     title: string;
-    price?: string;
-    image: string;
     onPress?: () => void;
-    icon?: ImageSourcePropType
+    icon?: ImageSourcePropType;
+    onDelete?: () => void;
 }
 
-export const FavoritetItem = memo(({ title, image, onPress, price, icon }: FavoriteItemProps) => {
+export const FavoritetItem = memo(({ title, image, onPress, price, icon, onDelete }: FavoriteItemProps) => {
     return (
         <Pressable onPress={onPress} style={styles.container} hitSlop={10}>
             <View style={styles.leftContent}>
-                <Image style={styles.image} source={{ uri: image }} />
+                {image?.path ? <Image style={styles.image} source={{ uri: `${Config.API_BASE_URL}/api/${image.path}` }} /> : null}
+
                 <View style={styles.content}>
                     <Text style={styles.title}>
                         {title}
@@ -24,7 +26,9 @@ export const FavoritetItem = memo(({ title, image, onPress, price, icon }: Favor
                     </Text>
                 </View>
             </View>
-            <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} />
+            <TouchableOpacity onPress={onDelete}>
+                <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} />
+            </TouchableOpacity>
         </Pressable>
     )
 })
