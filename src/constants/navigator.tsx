@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SCREENS } from "./screens";
-import { Image } from "react-native";
+import { ActivityIndicator, Image, View } from "react-native";
 import { Home } from '../screens/app/Home';
 import { Profile } from '../screens/app/Profile';
 import { Favorites } from '../screens/app/Favorites';
@@ -13,8 +13,9 @@ import { Settings } from "../screens/app/Settings";
 import { CreateListing } from "../screens/app/CreateListing";
 import { MyListing } from "../screens/app/MyListing";
 import { ProductDetails } from '../screens/app/ProductDetails';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../store/userContext";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
 
 const Stack = createNativeStackNavigator();
@@ -60,8 +61,36 @@ export const TAB = () => {
 }
 
 export const Navigator = () => {
-  const { isLoggedIn } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+  const { isLoggedIn, setLoggedIn } = useContext(UserContext);
+  const { getItem } = useAsyncStorage('@token');
 
+  useEffect(() => {
+    setLoading(true)
+    const getData = async () => {
+      try {
+
+        const value = await getItem()
+        if (value !== null) {
+          setLoggedIn(false)
+        }
+        setLoggedIn(true)
+
+      } catch (e) {
+        // error reading value
+        setLoggedIn(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+    getData()
+  }, [])
+
+  if (loading) {
+    return <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator />
+    </View>
+  }
   return (
     <Stack.Navigator>
       {

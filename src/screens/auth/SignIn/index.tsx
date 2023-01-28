@@ -13,6 +13,7 @@ import { UserContext } from "../../../store/userContext";
 import { LoginDto } from "../../../dto";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../api";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SignIn = () => {
     const { setLoggedIn } = useContext(UserContext)
@@ -28,8 +29,9 @@ export const SignIn = () => {
     }
 
     const signIn = useMutation((body: LoginDto) => login(body), {
-        onSuccess: () => {
+        onSuccess: async (res) => {
             setLoggedIn(true)
+            await AsyncStorage.setItem('@token', res.data.token)
         }
     })
 
@@ -41,7 +43,7 @@ export const SignIn = () => {
     }
 
     const handleSubmit = () => {
-        signIn.mutate({ email: values.email.toLowerCase(), password: values.password.toLowerCase() })
+        signIn.mutateAsync(values)
     }
 
     return (

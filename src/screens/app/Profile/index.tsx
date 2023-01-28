@@ -1,5 +1,5 @@
 import { ScrollView, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SCREENS } from "../../../constants/screens";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,11 +7,15 @@ import { Header } from "../../../components/Header";
 import { styles } from "./style";
 import { ListItem } from "../../../components/ListItem";
 import { Button } from "../../../components/Button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from "../../../store/userContext";
 
 export const Profile = () => {
     const { navigate } = useNavigation()
-    const onLogout = () => {
-
+    const { setLoggedIn } = useContext(UserContext)
+    const onLogout = async () => {
+        AsyncStorage.removeItem('@token');
+        setLoggedIn(false)
     }
 
     const handlePress = (route: string) => {
