@@ -11,6 +11,7 @@ import { Button } from "../../../components/Button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProfileDto, UpdateProfileDto } from "../../../dto";
 import { getProfile, updateProfile } from "../../../api";
+import { queryClient } from "../../../../App";
 
 export const Settings = () => {
     const { goBack } = useNavigation()
@@ -26,7 +27,8 @@ export const Settings = () => {
     });
     const updateSettings = useMutation((body: UpdateProfileDto) => updateProfile(body), {
         onSuccess: () => {
-            setEdit(false)
+            setEdit(false);
+            queryClient.invalidateQueries(["profile"])
         }
     })
     const handlePress = () => {

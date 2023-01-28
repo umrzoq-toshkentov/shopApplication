@@ -26,10 +26,15 @@ const MyTheme = {
   },
 };
 
-
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1
+    }
+  }
+});
 
 function App(): JSX.Element {
-  const isSigned = false
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -39,13 +44,7 @@ function App(): JSX.Element {
     });
   }, [])
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 1
-      }
-    }
-  });
+
 
   return (
     <QueryClientProvider client={queryClient}>
