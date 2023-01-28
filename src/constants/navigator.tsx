@@ -4,11 +4,17 @@ import { Image } from "react-native";
 import { Home } from '../screens/app/Home';
 import { Profile } from '../screens/app/Profile';
 import { Favorites } from '../screens/app/Favorites';
+import { Splash } from '../screens/auth/Splash';
+import { SignUp } from '../screens/auth/SignUp';
+import { SignIn } from '../screens/auth/SignIn';
 import { colors } from "../utils/colors";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Settings } from "../screens/app/Settings";
 import { CreateListing } from "../screens/app/CreateListing";
 import { MyListing } from "../screens/app/MyListing";
+import { ProductDetails } from '../screens/app/ProductDetails';
+import { useContext } from "react";
+import { UserContext } from "../store/userContext";
 
 
 const Stack = createNativeStackNavigator();
@@ -50,5 +56,28 @@ export const TAB = () => {
       <BottomTab.Screen name={SCREENS.FAVORITES} component={Favorites} />
       <BottomTab.Screen name={SCREENS.PROFILE_SCREEN} component={ProfileStack} />
     </BottomTab.Navigator>
+  )
+}
+
+export const Navigator = () => {
+  const { isLoggedIn } = useContext(UserContext)
+
+  return (
+    <Stack.Navigator>
+      {
+        isLoggedIn ? (
+          <>
+            <Stack.Screen options={{ headerShown: false }} name={SCREENS.TABS} component={TAB} />
+            <Stack.Screen options={{ headerShown: false }} name={SCREENS.PRODUCT_DETAILS} component={ProductDetails} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
+            <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
+            <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
+          </>
+        )
+      }
+    </Stack.Navigator>
   )
 }

@@ -22,16 +22,20 @@ export const SignUp = () => {
         password: "",
         email: ""
     })
-    const signUp = useMutation((body: RegisterProps) => register(body))
+
+    const onSignIn = () => {
+        navigate(SCREENS.SIGN_IN as never)
+    }
+    const signUp = useMutation((body: RegisterProps) => register(body), {
+        onSuccess: () => {
+            onSignIn()
+        }
+    })
 
 
     const handleCheck = () => setChecked(!checked);
 
     const handleBack = () => goBack()
-
-    const onSignIn = () => {
-        navigate(SCREENS.SIGN_IN as never)
-    }
 
     const onChangeText = (v: string, key: string) => {
         setValues((values) => ({

@@ -6,19 +6,15 @@
  */
 
 import React, { useEffect } from 'react';
-import { Splash } from './src/screens/auth/Splash';
-import { SignUp } from './src/screens/auth/SignUp';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import Config from "react-native-config";
-import { SignIn } from './src/screens/auth/SignIn';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SCREENS } from './src/constants/screens';
 import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TAB } from './src/constants/navigator';
-import { ProductDetails } from './src/screens/app/ProductDetails';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserProvider } from './src/store/userContext';
+import { Navigator } from './src/constants/navigator';
 
 
 const MyTheme = {
@@ -30,7 +26,6 @@ const MyTheme = {
   },
 };
 
-const Stack = createNativeStackNavigator()
 
 
 function App(): JSX.Element {
@@ -48,26 +43,14 @@ function App(): JSX.Element {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <NavigationContainer theme={MyTheme}>
-          <Stack.Navigator>
-            {
-              isSigned ? (
-                <>
-                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.TABS} component={TAB} />
-                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.PRODUCT_DETAILS} component={ProductDetails} />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
-                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
-                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
-                </>
-              )
-            }
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      {/* @ts-ignore */}
+      <UserProvider>
+        <SafeAreaProvider>
+          <NavigationContainer theme={MyTheme}>
+            <Navigator />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }
