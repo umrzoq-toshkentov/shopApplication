@@ -6,47 +6,63 @@ export const styles = StyleSheet.create({
   container: {
     padding: 24,
   },
-  personal: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.black,
-    marginBottom: 12,
-  },
-  email: {
-    fontSize: 14,
-    color: colors.grey,
-  },
-  listContainer: {
-    marginTop: 25,
-    flexDirection: 'column',
-    gap: 20,
-    marginBottom: 50,
-  },
-  footer: {
-    flex: 1,
+  imageContent: {
     padding: 24,
   },
-  content: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  uploadImageContainer: {
+    width: 90,
+    height: 90,
+    justifyContent: 'center',
     alignItems: 'center',
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginRight: 5,
+    marginTop: 10,
   },
-  contentTitle: {
+  uploadWrapper: {
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.grey,
+    borderRadius: 50,
+  },
+  upload: {
+    width: 19,
+    height: 19,
+  },
+  sectionTitle: {
+    fontWeight: '500',
     fontSize: 16,
-    fontWeight: '600',
-    color: colors.grey,
+    color: colors.blue,
+    marginBottom: 16,
   },
-  contentImageContainer: {
-    width: 24,
-    height: 24,
+  imageContainer: {
+    flexDirection: 'row',
+    paddingVertical: 10,
   },
-  contentImage: {
+  uploadedImage: {
+    position: 'relative',
+    height: 90,
+    width: 90,
+    marginLeft: 10,
+  },
+  image: {
+    width: 90,
+    height: 90,
+  },
+  deleteImageContainer: {
+    position: 'absolute',
+
+    top: -5,
+    right: -5,
+  },
+  deleteImage: {
     width: 20,
     height: 20,
+  },
+  imageList: {
+    paddingVertical: 10,
   },
 });
