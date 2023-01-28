@@ -68,8 +68,8 @@ export const CreateListing = () => {
         <SafeAreaView style={styles.mainContainer}>
             <Header showBack onBackPress={goBack} title="Create a new listing" />
 
-            <KeyboardAvoidingView behavior="position">
-                <ScrollView style={styles.container}>
+            <ScrollView style={styles.container}>
+                <KeyboardAvoidingView behavior="position">
                     <Text style={styles.sectionTitle}>Upload a photo</Text>
                     <View style={styles.imageContainer}>
                         <TouchableOpacity disabled={loading} style={styles.uploadImageContainer} onPress={uploadNewImage}>
@@ -121,12 +121,12 @@ export const CreateListing = () => {
                         />
                     </View>
 
-                    <View style={styles.formItem}>
-                        <Button text="Submit" />
-                    </View>
 
-                </ScrollView>
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
+                <View style={[styles.formItem, styles.button]}>
+                    <Button text="Submit" />
+                </View>
+            </ScrollView>
 
 
         </SafeAreaView>

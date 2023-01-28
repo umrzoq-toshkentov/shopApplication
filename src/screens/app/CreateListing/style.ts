@@ -70,4 +70,7 @@ export const styles = StyleSheet.create({
     minHeight: 150,
     paddingTop: 20,
   },
+  button: {
+    marginBottom: 100,
+  },
 });
