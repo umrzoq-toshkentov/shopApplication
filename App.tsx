@@ -18,6 +18,7 @@ import { colors } from './src/utils/colors';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TAB } from './src/constants/navigator';
 import { ProductDetails } from './src/screens/app/ProductDetails';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 
 const MyTheme = {
@@ -33,7 +34,7 @@ const Stack = createNativeStackNavigator()
 
 
 function App(): JSX.Element {
-  const isSigned = true
+  const isSigned = false
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -43,27 +44,31 @@ function App(): JSX.Element {
     });
   }, [])
 
+  const queryClient = new QueryClient();
+
   return (
-    <SafeAreaProvider>
-      <NavigationContainer theme={MyTheme}>
-        <Stack.Navigator>
-          {
-            isSigned ? (
-              <>
-                <Stack.Screen options={{ headerShown: false }} name={SCREENS.TABS} component={TAB} />
-                <Stack.Screen options={{ headerShown: false }} name={SCREENS.PRODUCT_DETAILS} component={ProductDetails} />
-              </>
-            ) : (
-              <>
-                <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
-                <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
-                <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
-              </>
-            )
-          }
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <NavigationContainer theme={MyTheme}>
+          <Stack.Navigator>
+            {
+              isSigned ? (
+                <>
+                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.TABS} component={TAB} />
+                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.PRODUCT_DETAILS} component={ProductDetails} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SPLASH} component={Splash} />
+                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_UP} component={SignUp} />
+                  <Stack.Screen options={{ headerShown: false }} name={SCREENS.SIGN_IN} component={SignIn} />
+                </>
+              )
+            }
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
 
