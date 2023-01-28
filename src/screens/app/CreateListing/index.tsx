@@ -5,8 +5,9 @@ import { Header } from "../../../components/Header";
 import { styles } from "./style";
 import { Button } from "../../../components/Button";
 import { useNavigation } from "@react-navigation/native";
-import { Asset, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, launchImageLibrary } from 'react-native-image-picker';
 import { Input } from "../../../components/Input";
+import { categories } from "../../../data/categories";
 
 
 export const CreateListing = () => {
@@ -15,9 +16,11 @@ export const CreateListing = () => {
     const [values, setValues] = useState({
         title: "",
         price: "0",
-        description: ""
+        description: "",
+        category: ""
     })
     const { goBack } = useNavigation();
+
 
     const renderImageItem = ({ item }: { item: Asset }) => {
 
@@ -84,6 +87,17 @@ export const CreateListing = () => {
                             label="Title"
                             value={values.title}
                             onChange={(v: string) => onChange(v, "title")}
+                        />
+                    </View>
+
+                    <View style={styles.formItem}>
+                        <Input
+                            label="Category"
+                            inputType="picker"
+                            placeholder="Select the category"
+                            options={categories}
+                            value={values.category}
+                            onChange={(v: string) => onChange(v, "category")}
                         />
                     </View>
                     <View style={styles.formItem}>
