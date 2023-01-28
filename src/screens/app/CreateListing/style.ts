@@ -6,9 +6,10 @@ export const styles = StyleSheet.create({
   container: {
     padding: 24,
   },
-  imageContent: {
-    padding: 24,
+  formItem: {
+    marginTop: 24,
   },
+  imageContent: {},
   uploadImageContainer: {
     width: 90,
     height: 90,
@@ -64,5 +65,9 @@ export const styles = StyleSheet.create({
   },
   imageList: {
     paddingVertical: 10,
+  },
+  description: {
+    minHeight: 150,
+    paddingTop: 20,
   },
 });
