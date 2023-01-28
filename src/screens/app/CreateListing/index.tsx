@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, Pressable, ActivityIndicator } from "react-native";
+import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, Pressable, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from "../../../components/Header";
@@ -65,53 +65,55 @@ export const CreateListing = () => {
         <SafeAreaView style={styles.mainContainer}>
             <Header showBack onBackPress={goBack} title="Create a new listing" />
 
-            <ScrollView style={styles.container}>
-                <Text style={styles.sectionTitle}>Upload a photo</Text>
+            <KeyboardAvoidingView behavior="position">
+                <ScrollView style={styles.container}>
+                    <Text style={styles.sectionTitle}>Upload a photo</Text>
+                    <View style={styles.imageContainer}>
+                        <TouchableOpacity disabled={loading} style={styles.uploadImageContainer} onPress={uploadNewImage}>
+                            <View style={styles.uploadWrapper}>
+                                <Image style={styles.upload} source={require("../../../assets/plus.png")} />
+                            </View>
+                        </TouchableOpacity>
+                        {images.length > 0 ? <FlatList style={styles.imageList} horizontal showsHorizontalScrollIndicator={false} data={images} keyExtractor={(item, index) => String(index)} renderItem={renderImageItem} /> : null}
+                        {loading ? <ActivityIndicator /> : null}
+                    </View>
 
-                <View style={styles.imageContainer}>
-                    <TouchableOpacity disabled={loading} style={styles.uploadImageContainer} onPress={uploadNewImage}>
-                        <View style={styles.uploadWrapper}>
-                            <Image style={styles.upload} source={require("../../../assets/plus.png")} />
-                        </View>
-                    </TouchableOpacity>
-                    {images.length > 0 ? <FlatList style={styles.imageList} horizontal showsHorizontalScrollIndicator={false} data={images} keyExtractor={(item, index) => String(index)} renderItem={renderImageItem} /> : null}
-                    {loading ? <ActivityIndicator /> : null}
-                </View>
+                    <View style={styles.formItem}>
+                        <Input
+                            placeholder="Listing title"
+                            label="Title"
+                            value={values.title}
+                            onChange={(v: string) => onChange(v, "title")}
+                        />
+                    </View>
+                    <View style={styles.formItem}>
+                        <Input
+                            placeholder="Enter Price in USD"
+                            label="Price"
+                            keyboardType="number-pad"
+                            value={values.price}
+                            onChange={(v: string) => onChange(v, "price")}
+                        />
+                    </View>
+                    <View style={styles.formItem}>
+                        <Input
+                            multiline
+                            numberOfLines={8}
+                            label="Description"
+                            placeholder="Tell us more..."
+                            value={values.description}
+                            style={styles.description}
+                            onChange={(v: string) => onChange(v, "description")}
+                        />
+                    </View>
 
+                    <View style={styles.formItem}>
+                        <Button text="Submit" />
+                    </View>
 
-                <View style={styles.formItem}>
+                </ScrollView>
+            </KeyboardAvoidingView>
 
-                    <Input
-                        placeholder="Listing title"
-                        label="Title"
-                        value={values.title}
-                        onChange={(v: string) => onChange(v, "title")}
-                    />
-                </View>
-                <View style={styles.formItem}>
-
-                    <Input
-                        placeholder="Enter Price in USD"
-                        label="Price"
-                        keyboardType="number-pad"
-                        value={values.price}
-                        onChange={(v: string) => onChange(v, "price")}
-                    />
-                </View>
-                <View style={styles.formItem}>
-
-                    <Input
-                        multiline
-                        numberOfLines={8}
-                        label="Description"
-                        placeholder="Tell us more..."
-                        value={values.description}
-                        style={styles.description}
-                        onChange={(v: string) => onChange(v, "description")}
-                    />
-                </View>
-
-            </ScrollView>
 
         </SafeAreaView>
     )

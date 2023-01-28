@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     padding: 24,
   },
   formItem: {
-    marginTop: 24,
+    marginBottom: 24,
   },
   imageContent: {},
   uploadImageContainer: {
