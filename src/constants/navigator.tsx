@@ -8,6 +8,7 @@ import { colors } from "../utils/colors";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Settings } from "../screens/app/Settings";
 import { CreateListing } from "../screens/app/CreateListing";
+import { MyListing } from "../screens/app/MyListing";
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ const ProfileStack = () => {
       <Stack.Screen options={{ headerShown: false }} name={SCREENS.PROFILE} component={Profile} />
       <Stack.Screen options={{ headerShown: false }} name={SCREENS.SETTINGS} component={Settings} />
       <Stack.Screen options={{ headerShown: false }} name={SCREENS.CREATE_LISTINGS} component={CreateListing} />
+      <Stack.Screen options={{ headerShown: false }} name={SCREENS.LISTINGS} component={MyListing} />
     </Stack.Navigator>
   )
 }

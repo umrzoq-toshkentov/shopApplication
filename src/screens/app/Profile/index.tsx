@@ -14,12 +14,8 @@ export const Profile = () => {
 
     }
 
-    const handlePress = () => {
-        navigate(SCREENS.SETTINGS as never)
-    }
-
-    const handleCreateListing = () => {
-        navigate(SCREENS.CREATE_LISTINGS as never)
+    const handlePress = (route: string) => {
+        navigate(route as never)
     }
 
     return (
@@ -35,11 +31,11 @@ export const Profile = () => {
 
 
                 <View style={styles.listContainer}>
-                    <ListItem title="My Listings" subtitle="Already have 10 listing" />
-                    <ListItem onPress={handlePress} title="Settings" subtitle="Account, FAQ, Contact" />
+                    <ListItem onPress={() => handlePress(SCREENS.LISTINGS)} title="My Listings" subtitle="Already have 10 listing" />
+                    <ListItem onPress={() => handlePress(SCREENS.SETTINGS)} title="Settings" subtitle="Account, FAQ, Contact" />
                 </View>
 
-                <Button handlePress={handleCreateListing} style={styles.button} text="Add New Listing" />
+                <Button handlePress={() => handlePress(SCREENS.CREATE_LISTINGS)} style={styles.button} text="Add New Listing" />
 
             </ScrollView>
 

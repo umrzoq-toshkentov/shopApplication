@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Image, Pressable, Text, View } from "react-native"
+import { Image, ImageSourcePropType, Pressable, Text, View } from "react-native"
 import { styles } from './styles';
 
 interface FavoriteItemProps {
@@ -7,9 +7,10 @@ interface FavoriteItemProps {
     price?: string;
     image: string;
     onPress?: () => void;
+    icon?: ImageSourcePropType
 }
 
-export const FavoritetItem = memo(({ title, image, onPress, price, }: FavoriteItemProps) => {
+export const FavoritetItem = memo(({ title, image, onPress, price, icon }: FavoriteItemProps) => {
     return (
         <Pressable onPress={onPress} style={styles.container} hitSlop={10}>
             <View style={styles.leftContent}>
@@ -23,7 +24,7 @@ export const FavoritetItem = memo(({ title, image, onPress, price, }: FavoriteIt
                     </Text>
                 </View>
             </View>
-            <Image style={styles.deleteImage} source={require("../../assets/delete.png")} />
+            <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} />
         </Pressable>
     )
 })
