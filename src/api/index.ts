@@ -60,3 +60,13 @@ export const updateService = async (
 
   return res;
 };
+
+export const deleteService = async (id: string) => {
+  const res = await api.delete('api/services', {
+    data: {
+      servicesId: id,
+    },
+  });
+
+  return res;
+};
