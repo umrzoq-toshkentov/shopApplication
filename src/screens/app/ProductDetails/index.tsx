@@ -56,9 +56,9 @@ export const ProductDetails = () => {
                 </Pressable>
             </ScrollView>
             <View style={styles.footer}>
-                <Pressable onPress={handleLike} style={styles.bookmark_container}>
+                {/* <Pressable onPress={handleLike} style={styles.bookmark_container}>
                     <Image style={styles.bookmark} source={require("../../../assets/tabs/bookmark_active.png")} />
-                </Pressable>
+                </Pressable> */}
                 <View style={styles.contact_container}>
                     <Button handlePress={handlePress} text="Contact seller" />
                 </View>

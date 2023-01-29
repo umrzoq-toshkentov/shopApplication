@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, RefreshControl, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from "../../../components/Header";
@@ -20,12 +20,16 @@ export const Home = () => {
     const [keyword, setKeyword] = useState<string>('')
     const { value } = useDebounce(keyword, 500)
 
-    const { isLoading, data } = useQuery<Service[]>(["services"], () => getServices(), {
+    const { isLoading, data, isRefetching, refetch } = useQuery<Service[]>(["services"], () => getServices(), {
         onSuccess: (data) => {
             const filteredData = data.filter(item => !!item.image)
             setFilteredProducts(filteredData)
         }
     });
+
+    const onRefresh = () => {
+        refetch()
+    }
     const filteredData = data?.filter(item => !!item.image) || []
 
     useEffect(() => {
@@ -77,6 +81,7 @@ export const Home = () => {
             <FlatList
                 style={styles.productList}
                 numColumns={2}
+                refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
                 data={filteredProducts}
                 renderItem={renderProductItem}
                 keyExtractor={(item) => String(item._id)}

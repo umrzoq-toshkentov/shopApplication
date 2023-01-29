@@ -7,7 +7,7 @@ import { Service } from '../../dto';
 interface FavoriteItemProps extends Service {
     title: string;
     onPress?: () => void;
-    icon?: ImageSourcePropType;
+    icon?: ImageSourcePropType | boolean;
     onDelete?: () => void;
 }
 
@@ -27,7 +27,7 @@ export const FavoritetItem = memo(({ title, image, onPress, price, icon, onDelet
                 </View>
             </View>
             <TouchableOpacity onPress={onDelete}>
-                <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} />
+                {icon ? <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} /> : null}
             </TouchableOpacity>
         </Pressable>
     )
