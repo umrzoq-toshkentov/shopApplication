@@ -27,7 +27,7 @@ export const FavoritetItem = memo(({ title, image, onPress, price, icon, onDelet
                 </View>
             </View>
             <TouchableOpacity onPress={onDelete}>
-                {icon ? <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} /> : null}
+                <Image style={styles.deleteImage} source={icon || require("../../assets/delete.png")} />
             </TouchableOpacity>
         </Pressable>
     )

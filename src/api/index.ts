@@ -55,7 +55,7 @@ export const updateService = async (
 ) => {
   const res = await api.patch(`api/services/`, {
     ...body,
-    serviceId: id,
+    servicesId: id,
   });
 
   return res;

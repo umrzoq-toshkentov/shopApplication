@@ -37,7 +37,7 @@ export const Favorites = () => {
             })
         }
 
-        return (<FavoritetItem icon={false} onDelete={handleDelete} onPress={onPress} {...item} />)
+        return (<FavoritetItem onDelete={handleDelete} onPress={onPress} {...item} />)
     }
 
     const onRefresh = () => {
