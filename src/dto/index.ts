@@ -42,3 +42,13 @@ export interface Service {
 }
 
 export interface UpdateServiceDto extends Pick<Service, 'liked'> {}
+
+export interface CreateServiceDto {
+  title: string;
+  subtitle: string;
+  description: string;
+  price: string;
+  image?: any;
+  currency: string;
+  category: number;
+}

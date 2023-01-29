@@ -8,6 +8,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Asset, launchImageLibrary } from 'react-native-image-picker';
 import { Input } from "../../../components/Input";
 import { categories } from "../../../data/categories";
+import { queryClient } from "../../../../App";
+import { useMutation } from "@tanstack/react-query";
+import { CreateServiceDto } from "../../../dto";
+import { createService } from "../../../api";
 
 
 export const CreateListing = () => {
@@ -15,11 +19,23 @@ export const CreateListing = () => {
     const [loading, setLoading] = useState(false);
     const [values, setValues] = useState({
         title: "",
-        price: "0",
+        subtitle: "",
+        price: "",
         description: "",
-        category: ""
+        category: {
+            id: 0,
+            image: '',
+            title: ""
+        }
     })
     const { goBack } = useNavigation();
+
+    const createListing = useMutation(({ body }: { body: CreateServiceDto }) => createService(body), {
+        onSuccess: () => {
+            queryClient.invalidateQueries(["services"])
+            goBack();
+        }
+    })
 
 
     const renderImageItem = ({ item }: { item: Asset }) => {
@@ -45,7 +61,10 @@ export const CreateListing = () => {
         try {
             const res = await launchImageLibrary({
                 mediaType: 'mixed',
-                selectionLimit: 4
+                selectionLimit: 4,
+                quality: 0.3,
+                maxHeight: 300,
+                maxWidth: 300
             })
             if (res?.assets?.length) {
                 setImages((list) => [...list, ...res.assets as Asset[]])
@@ -62,6 +81,31 @@ export const CreateListing = () => {
             ...values,
             [key]: v
         }))
+    }
+
+    const onSubmit = () => {
+        const data = {
+            category: values.category.id,
+            currency: 'USD',
+            description: values.description,
+            price: values.price,
+            subtitle: values.subtitle,
+            title: values.title
+        }
+
+        const img = images?.length ? images[0] : null
+        if (img) {
+            Object.assign(data, {
+                image: {
+                    uri: img.uri,
+                    name: img.fileName,
+                    type: img.type
+                }
+            })
+        }
+        createListing.mutate({
+            body: data
+        })
     }
 
     return (
@@ -92,10 +136,20 @@ export const CreateListing = () => {
 
                     <View style={styles.formItem}>
                         <Input
+                            placeholder="Listing subtitle"
+                            label="Subtitle"
+                            value={values.subtitle}
+                            onChange={(v: string) => onChange(v, "subtitle")}
+                        />
+                    </View>
+
+                    <View style={styles.formItem}>
+                        <Input
                             label="Category"
                             inputType="picker"
                             placeholder="Select the category"
                             options={categories}
+                            // @ts-ignore
                             value={values.category}
                             onChange={(v: string) => onChange(v, "category")}
                         />
@@ -124,7 +178,7 @@ export const CreateListing = () => {
 
                 </KeyboardAvoidingView>
                 <View style={[styles.formItem, styles.button]}>
-                    <Button text="Submit" />
+                    <Button handlePress={onSubmit} text="Submit" />
                 </View>
             </ScrollView>
 

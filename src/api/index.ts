@@ -5,6 +5,7 @@ import {
   LoginDto,
   UpdateProfileDto,
   UpdateServiceDto,
+  CreateServiceDto,
 } from '../dto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -68,5 +69,32 @@ export const deleteService = async (id: string) => {
     },
   });
 
+  return res;
+};
+
+export const createService = async (body: CreateServiceDto) => {
+  const formData = new FormData();
+  // for (let key in body) {
+  //   if (key !== 'image') {
+  //     //@ts-ignore
+  //     formData.append(key, body[key]);
+  //   }
+  // }
+  const objkeys = Object.keys(body);
+
+  objkeys.forEach(key => {
+    //@ts-ignore
+    formData.append(key, body[key]);
+  });
+
+  // for (let i = 0; i < body.image.length; i++) {
+  //   formData.append('image', body.image[i]);
+  // }
+
+  const res = await api.post('api/services', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return res;
 };
